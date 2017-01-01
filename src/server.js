@@ -64,11 +64,22 @@ app.use('/api', APIRouter);
 //Wildcard Route for React SPA
 app.get('*', function (req, res) {
 	match({ routes: routes, location: req.url }, (err, redirect, props) => {
-		const html = renderToString(<RouterContext {...props}/>)
-		res.render('application', {
-			layout: false,
-			content: html
-		});
+		if (err) {
+      		res.status(500).send(error.message)
+    	} 
+    	else if (redirect) {
+      		res.redirect(302, redirect.pathname + redirect.search)
+    	} 
+    	else if (props) {
+			const html = renderToString(<RouterContext {...props}/>)
+			res.render('application', {
+				layout: false,
+				content: html
+			});
+		}
+		else {
+      		res.status(404).send('Not found')
+    	}
 	});
 });
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import Promise from 'bluebird'
+import { withRouter } from 'react-router'
 import 'whatwg-fetch'
 
 class RegisterBarber extends React.Component {
@@ -38,7 +39,7 @@ class RegisterBarber extends React.Component {
 		.then(response => response.json())
 		.then(data => {
 			if(data.success) {
-				this.setState({errors: ["success"]});
+				this.context.router.push('/login');
 			}
 			else {
 				this.setState({errors: data.errors});
@@ -54,7 +55,7 @@ class RegisterBarber extends React.Component {
 		};
 
 		if(this.state.errors) {
-			errorDisplay = this.state.errors.map((err) => {
+			errorDisplay = this.props.errors.map((err) => {
 				return (<p style={style}>{err}</p>);
 			});
 		}
@@ -93,4 +94,8 @@ class RegisterBarber extends React.Component {
 	}
 }
 
-export default RegisterBarber;
+RegisterBarber.propTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+export default withRouter(RegisterBarber);

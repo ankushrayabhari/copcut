@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import Promise from 'bluebird'
 import 'whatwg-fetch'
 
@@ -25,7 +26,8 @@ class Login extends React.Component {
 		.then(response => response.json())
 		.then(data => {
 			if(data.success) {
-				this.setState({error: "success"});
+				this.props.setAuthentication(true);
+				this.props.router.push('/');
 			}
 			else {
 				this.setState({error: data.error});
@@ -55,4 +57,8 @@ class Login extends React.Component {
 	}
 }
 
-export default Login;
+Login.propTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+export default withRouter(Login);

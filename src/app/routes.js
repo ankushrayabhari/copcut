@@ -5,7 +5,8 @@ import App from './components/app'
 import Home from './components/home'
 import RegisterUser from './components/registeruser'
 import RegisterBarber from './components/registerbarber'
-import Login from './components/Login'
+import Login from './components/login'
+import Logout from './components/logout'
 
 export default (
 	<Route path="/" component={App}>
@@ -13,5 +14,6 @@ export default (
 		<Route path="/register/barber" component={RegisterBarber} />
 		<Route path="/register/user" component={RegisterUser} />
 		<Route path="/login" component={Login} />
+		<Route path="/logout" component={Logout} />
 	</Route>
 );

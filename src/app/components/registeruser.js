@@ -1,5 +1,6 @@
 import React from 'react'
 import Promise from 'bluebird'
+import { withRouter } from 'react-router'
 import 'whatwg-fetch'
 
 class RegisterUser extends React.Component {
@@ -31,7 +32,7 @@ class RegisterUser extends React.Component {
 		.then(response => response.json())
 		.then(data => {
 			if(data.success) {
-				this.setState({errors: ["success"]});
+				this.props.router.push('/login');
 			}
 			else {
 				this.setState({errors: data.errors});
@@ -76,4 +77,8 @@ class RegisterUser extends React.Component {
 	}
 }
 
-export default RegisterUser;
+RegisterUser.propTypes = {
+  router: React.PropTypes.object.isRequired
+};
+
+export default withRouter(RegisterUser);
