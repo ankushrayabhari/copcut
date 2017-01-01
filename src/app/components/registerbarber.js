@@ -1,28 +1,96 @@
 import React from 'react'
+import Promise from 'bluebird'
+import 'whatwg-fetch'
 
-export default () => {
-	return (
-		<form>
-			Username: <input type='text' name='username' maxlength='36' /><br/>
-			Password: <input type='password' name='password' /><br/>
-			Email: <input type='email' name='email' maxlength="320" /><br/>
-			Birthday: <input type='date' name='birthday' /><br/>
+class RegisterBarber extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {errors: null};
+	}
 
-			First Name: <input type='text' name='firstname' maxlength="50" /><br/>
-			Middle Name: <input type='text' name='middlename' maxlength="50" /><br/>
-			Last Name: <input type='text' name='lastname' maxlength="50" /><br/>
-			Gender: <input type='text' name='gender' maxlength="1" /><br/>
+	handleSubmit() {
+		const data = {
+			username: this.refs.username.value,
+			firstname: this.refs.firstname.value,
+			middlename: this.refs.middlename.value,
+			lastname: this.refs.lastname.value,
+			password: this.refs.password.value,
+			email: this.refs.email.value,
+			birthday: this.refs.birthday.value,
+			gender: this.refs.gender.value,
+			address: this.refs.address.value,
+			city: this.refs.city.value,
+			country: this.refs.country.value,
+			postcode: this.refs.postcode.value,
+			phonenumber: this.refs.phonenumber.value,
+			yearscut: this.refs.yearscut.value,
+			description: this.refs.description.value
+		};
 
-			Address: <input type='text' name='address' /><br/>
-			City: <input type='text' name='city' /><br/>
-			Country: <input type='text' name='country' /><br/>
-			Post Code: <input type='text' name='postcode' maxlength="15" /><br/>
-			Phone Number: <input type='text' name='phonenumber' maxlength="50" /><br/>
+		fetch('/api/register/barber', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+		.then(response => response.json())
+		.then(data => {
+			if(data.success) {
+				this.setState({errors: ["success"]});
+			}
+			else {
+				this.setState({errors: data.errors});
+			}
+		});
+	}
 
-			Profile Picture: <input type='file' name='profilepicture' /><br/>
-			Years Cut: <input type='number' name='yearscut' min='0' /><br/>
-			Description: <textarea name="description" rows="10" cols="30"></textarea><br/>
-			<input type="submit" /> <input type="reset"/>
-		</form>
-	);
+	render() {
+		let errorDisplay = null;
+
+		const style = {
+			color: "red"
+		};
+
+		if(this.state.errors) {
+			errorDisplay = this.state.errors.map((err) => {
+				return (<p style={style}>{err}</p>);
+			});
+		}
+		
+		return (
+			<div>
+				<h3>Register as a Barber</h3>
+				<div>
+					{errorDisplay}
+				</div>
+				
+				<div>
+					Username: <input type='text' ref='username' maxLength='36' /><br/>
+					Password: <input type='password' ref='password' /><br/>
+					Email: <input type='email' ref='email' maxLength="320" /><br/>
+					Birthday: <input type='date' ref='birthday' /><br/>
+
+					First Name: <input type='text' ref='firstname' maxLength="50" /><br/>
+					Middle Name: <input type='text' ref='middlename' maxLength="50" /><br/>
+					Last Name: <input type='text' ref='lastname' maxLength="50" /><br/>
+					Gender: <input type='text' ref='gender' maxLength="1" /><br/>
+
+					Address: <input type='text' ref='address' /><br/>
+					City: <input type='text' ref='city' /><br/>
+					Country: <input type='text' ref='country' /><br/>
+					Post Code: <input type='text' ref='postcode' maxlength="15" /><br/>
+					Phone Number: <input type='text' ref='phonenumber' maxlength="50" /><br/>
+
+					Profile Picture: <input type='file' ref='profilepicture' /><br/>
+					Years Cut: <input type='number' ref='yearscut' min='0' /><br/>
+					Description: <textarea ref="description" rows="10" cols="30"></textarea><br/>
+					<button onClick={this.handleSubmit.bind(this)}>Register</button>
+				</div>
+			</div>
+		);
+	}
 }
+
+export default RegisterBarber;

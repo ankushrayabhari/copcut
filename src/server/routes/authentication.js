@@ -55,26 +55,31 @@ router.post('/register/user', (req, res) => {
 	req.checkBody('birthday', 'Enter a valid birthday.').notEmpty().isDate();
 	req.checkBody('gender', 'Enter a valid gender.').notEmpty().isAlpha().isLength({min:1, max:1});
 	
-	const errors = req.validationErrors();
-	if(errors) {
-		res.json({errors: errors, data: data});
-	}
-	else {
-		User.addUser(data)
-		.then(() => res.json({success: true}))
-		.catch(UsernameExistsError, error => {
-			res.json({success: false, errors: ['The username you selected already exists.'], data: data});
-		})
-		.catch(EmailExistsError, error => {
-			res.json({success: false, errors: ['The email you selected already exists.'], data: data});
-		})
-		.catch(UsernameEmailExistsError, error => {
-			res.json({success: false, errors: ['The username you selected already exists.', 'The email you selected already exists.'], data: data});
-		})
-		.catch(error => {
-			res.json({success: false, errors: ['Your request could not be processed.'], data: data});
+	req.getValidationResult().then((result) => {
+		const errors = result.useFirstErrorOnly().array().map((err) => {
+			return err.msg;
 		});
-	}
+
+		if(errors.length > 0) {
+			res.json({success: false, errors: errors, data: data});
+		}
+		else {
+			User.addUser(data)
+			.then(() => res.json({success: true}))
+			.catch(UsernameExistsError, error => {
+				res.json({success: false, errors: ['The username you selected already exists.'], data: data});
+			})
+			.catch(EmailExistsError, error => {
+				res.json({success: false, errors: ['The email you selected already exists.'], data: data});
+			})
+			.catch(UsernameEmailExistsError, error => {
+				res.json({success: false, errors: ['The username you selected already exists.', 'The email you selected already exists.'], data: data});
+			})
+			.catch(error => {
+				res.json({success: false, errors: ['Your request could not be processed.'], data: data});
+			});
+		}
+	});
 });
 
 router.post('/register/barber', (req, res) => {
@@ -112,26 +117,31 @@ router.post('/register/barber', (req, res) => {
 	req.checkBody('yearscut', 'Enter a valid number.').notEmpty().isAlphanumeric();
 	req.checkBody('description', 'Enter a valid description.').notEmpty();
 
-	const errors = req.validationErrors();
-	if(errors) {
-		res.json({errors: errors, data: data});
-	}
-	else {
-		Barber.addBarber(data)
-		.then(() => res.json({success: true}))
-		.catch(UsernameExistsError, error => {
-			res.json({success: false, errors: ['The username you selected already exists.'], data: data});
-		})
-		.catch(EmailExistsError, error => {
-			res.json({success: false, errors: ['The email you selected already exists.'], data: data});
-		})
-		.catch(UsernameEmailExistsError, error => {
-			res.json({success: false, errors: ['The username you selected already exists.', 'The email you selected already exists.'], data: data});
-		})
-		.catch(error => {
-			res.json({success: false, errors: ['Your request could not be processed.'], data: data});
+	req.getValidationResult().then((result) => {
+		const errors = result.useFirstErrorOnly().array().map((err) => {
+			return err.msg;
 		});
-	}
+		
+		if(errors.length > 0) {
+			res.json({success: false, errors: errors, data: data});
+		}
+		else {
+			Barber.addBarber(data)
+			.then(() => res.json({success: true}))
+			.catch(UsernameExistsError, error => {
+				res.json({success: false, errors: ['The username you selected already exists.'], data: data});
+			})
+			.catch(EmailExistsError, error => {
+				res.json({success: false, errors: ['The email you selected already exists.'], data: data});
+			})
+			.catch(UsernameEmailExistsError, error => {
+				res.json({success: false, errors: ['The username you selected already exists.', 'The email you selected already exists.'], data: data});
+			})
+			.catch(error => {
+				res.json({success: false, errors: ['Your request could not be processed.'], data: data});
+			});
+		}
+	});
 });
 
 export default router;
