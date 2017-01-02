@@ -1,14 +1,12 @@
 import React from 'react'
-
+import loadjs from 'loadjs'
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
 	}
 
 	componentDidMount() {
-		$(function(){
-
-	        $("#typed").typed({
+		$("#typed").typed({
 	            // strings: ["Typed.js is a <strong>jQuery</strong> plugin.", "It <em>types</em> out sentences.", "And then deletes them.", "Try it out!"],
 	            stringsElement: $('#typed-strings'),
 	            typeSpeed: 75,
@@ -24,15 +22,11 @@ class Home extends React.Component {
 	        $(".reset").click(function(){
 	            $("#typed").typed('reset');
 	        });
-
-    	});
 	}
 
 	render() {
 		return (
 			<div>
-				<link rel="stylesheet" type="text/css" href="/typed.css"/>
-				<script src="/typed.js" type="text/javascript"></script>
 				<div id="changingtext" className="initial-bg-img">
 				<div className="container-fluid initial-bg">
 				<div className="container header-width-left" style={{"position": "relative", "top": "-30%", "left": "-10%", "marginTop": "-10%"}}>

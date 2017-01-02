@@ -46,6 +46,7 @@
     "express-session": "^1.14.1",
     "express-validator": "^3.1.2",
     "gulp-install": "^0.6.0",
+    "loadjs": "^3.2.1",
     "mysql": "^2.11.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

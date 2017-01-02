@@ -81,8 +81,8 @@ class RegisterBarber extends React.Component {
 					Address: <input type='text' ref='address' /><br/>
 					City: <input type='text' ref='city' /><br/>
 					Country: <input type='text' ref='country' /><br/>
-					Post Code: <input type='text' ref='postcode' maxlength="15" /><br/>
-					Phone Number: <input type='text' ref='phonenumber' maxlength="50" /><br/>
+					Post Code: <input type='text' ref='postcode' maxLength="15" /><br/>
+					Phone Number: <input type='text' ref='phonenumber' maxLength="50" /><br/>
 
 					Profile Picture: <input type='file' ref='profilepicture' /><br/>
 					Years Cut: <input type='number' ref='yearscut' min='0' /><br/>
