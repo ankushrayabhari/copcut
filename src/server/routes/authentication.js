@@ -16,7 +16,7 @@ router.post('/login', (req, res, next) => {
 
 		req.login(user, err => {
 			if (err) return next(err);
-			return res.json({success: true});
+			return res.json({success: true, user: user});
 		});
 	})(req, res, next);
 });

@@ -7,6 +7,7 @@ import RegisterUser from './components/registeruser'
 import RegisterBarber from './components/registerbarber'
 import Login from './components/login'
 import Logout from './components/logout'
+import Dashboard from './components/dashboard'
 
 export default (
 	<Route path="/" component={App}>
@@ -15,5 +16,6 @@ export default (
 		<Route path="/register/user" component={RegisterUser} />
 		<Route path="/login" component={Login} />
 		<Route path="/logout" component={Logout} />
+		<Route path="/dashboard" component={Dashboard} />
 	</Route>
 );
