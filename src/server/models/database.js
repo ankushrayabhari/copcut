@@ -2,7 +2,7 @@ import mysql from 'mysql'
 import Connection from 'mysql/lib/Connection'
 import Pool from 'mysql/lib/Pool'
 import Promise from 'bluebird'
-
+import Constants from './constants'
 /*
 **  MySQL driver for node has no support for Promises
 **  Use bluebird to promisify all the connection, pool and mysql functions
@@ -17,11 +17,11 @@ const Database = () => {
         connect() {
             connectionPool = mysql.createPool({
                 connectionLimit : 100,
-                host: 'localhost',
-                user: 'testuser',
-                password: 'testpassword',
+                host: Constants.host,
+                user: Constants.user,
+                password: Constants.password,
                 database: 'copcut'
-            });  
+            });
         },
 
         /*  Returns a promise containing the connection object
@@ -46,7 +46,7 @@ const Database = () => {
                             middlename VARCHAR(50),
                             lastname VARCHAR(50) NOT NULL,
                             password CHAR(60) BINARY NOT NULL,
-                            email VARCHAR(320) NOT NULL UNIQUE,
+                            email VARCHAR(255) NOT NULL UNIQUE,
                             birthday DATE NOT NULL,
                             gender CHAR(1) NOT NULL
                         );
@@ -64,7 +64,7 @@ const Database = () => {
                             postcode VARCHAR(15) NOT NULL,
                             phonenumber VARCHAR(50),
                             yearscut INT(1) NOT NULL,
-                            description VARCHAR(500),
+                            description TEXT,
                             FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
                         );
                     `),

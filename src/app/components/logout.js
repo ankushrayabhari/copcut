@@ -10,7 +10,7 @@ class Logout extends React.Component {
 
 	componentDidMount() {
 		setTimeout(() => {
-			this.props.setAuthentication(false);
+			this.props.setAuthenticationState(false, null);
 
 			fetch('/api/logout')
 			.then(() => {

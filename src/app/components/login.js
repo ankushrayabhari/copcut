@@ -26,7 +26,7 @@ class Login extends React.Component {
 		.then(response => response.json())
 		.then(data => {
 			if(data.success) {
-				this.props.setAuthentication(true);
+				this.props.setAuthenticationState(true, data.user);
 				this.props.router.push('/');
 			}
 			else {

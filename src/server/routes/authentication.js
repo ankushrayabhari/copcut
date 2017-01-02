@@ -8,7 +8,6 @@ import { UsernameExistsError, EmailExistsError, UsernameEmailExistsError } from 
 const router = express.Router();
 
 router.post('/login', (req, res, next) => {
-	console.log("called");
 	passport.authenticate('local', (error, user, info) => {
 		if (error) return next(error);
 
@@ -19,6 +18,15 @@ router.post('/login', (req, res, next) => {
 			return res.json({success: true, user: user});
 		});
 	})(req, res, next);
+});
+
+router.get('/authenticated', (req, res, next) => {
+	if(req.user) {
+		res.json({authenticated: true, user: req.user});
+	}
+	else {
+		res.json({authenticated: false, user: null});
+	}
 });
 
 router.get('/logout', (req, res) => {

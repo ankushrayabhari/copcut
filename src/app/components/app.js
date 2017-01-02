@@ -1,21 +1,34 @@
 import React from 'react'
 import { Link, IndexLink, withRouter } from 'react-router'
+import Promise from 'bluebird'
+import 'whatwg-fetch'
 
 class App extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {authenticated: false};
+		this.state = {authenticated: false, user: null};
 	}
 
-	setAuthentication(loggedIn) {
-		this.setState({authenticated: loggedIn});
+	componentDidMount() {
+		fetch('/api/authenticated', {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		})
+		.then(response => response.json())
+		.then(data => this.setState({authenticated: data.authenticated, user: data.user}));
+	}
+
+	setAuthenticationState(authenticated, user) {
+		this.setState({authenticated, user});
 	}
 
 	render() {
-
 		const childrenWithProps = React.Children.map(this.props.children, 
 			(child) => React.cloneElement(child, {
-				setAuthentication: this.setAuthentication.bind(this)
+				setAuthenticationState: this.setAuthenticationState.bind(this)
 			})
 	    );
 
@@ -35,6 +48,7 @@ class App extends React.Component {
 						</ul>
 
 						<ul className="nav navbar-nav navbar-right">
+							<li><Link to="/profile">{this.state.user.username}</Link></li>
 							<li><Link to="/logout"><span className="glyphicon glyphicon-log-in"></span> Logout</Link></li>
 						</ul>
 					</div>

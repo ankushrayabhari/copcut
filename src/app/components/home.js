@@ -1,5 +1,5 @@
 import React from 'react'
-import loadjs from 'loadjs'
+
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
@@ -15,7 +15,7 @@ class Home extends React.Component {
 	            contentType: 'html', // or text
 	            // defaults to false for infinite loop
 	            loopCount: false,
-	            callback: function(){ foo(); },
+	            callback: function(){},
 	            resetCallback: function() { newTyped(); }
 	        });
 

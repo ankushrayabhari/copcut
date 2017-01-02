@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "startserver": "forever start build/server.js",
-    "stopserver": "forever stop build/server.js",
-    "restartserver": "forever restart build/server.js"
+    "start": "node build/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -43,6 +41,7 @@
     "console-browserify": "^1.1.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
     "express-session": "^1.14.1",
     "express-validator": "^3.1.2",
     "gulp-install": "^0.6.0",
@@ -59,11 +58,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/copcut/copcut.git"
+    "url": "git+https://github.com/ankushrayabhari/copcut.git"
   },
   "bugs": {
-    "url": "https://github.com/copcut/copcut/issues"
+    "url": "https://github.com/ankushrayabhari/copcut/issues"
   },
-  "homepage": "https://github.com/copcut/copcut#readme",
+  "homepage": "https://github.com/ankushrayabhari/copcut#readme",
   "description": ""
 }
