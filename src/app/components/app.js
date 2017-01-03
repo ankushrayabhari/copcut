@@ -4,9 +4,9 @@ import Promise from 'bluebird'
 import 'whatwg-fetch'
 
 class App extends React.Component {
-	constructor(props) {
+	constructor(props, context) {
 		super(props)
-		this.state = {authenticated: false, user: null};
+		this.state = context.data || window.__initialState__ || {authenticated: false, user: null};
 	}
 
 	componentDidMount() {
@@ -28,7 +28,8 @@ class App extends React.Component {
 	render() {
 		const childrenWithProps = React.Children.map(this.props.children, 
 			(child) => React.cloneElement(child, {
-				setAuthenticationState: this.setAuthenticationState.bind(this)
+				setAuthenticationState: this.setAuthenticationState.bind(this),
+				authenticated: this.state.authenticated
 			})
 	    );
 
@@ -88,5 +89,9 @@ class App extends React.Component {
 		);
 	}
 }
+
+App.contextTypes = { 
+  data: React.PropTypes.object
+};
 
 export default withRouter(App);

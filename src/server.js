@@ -12,9 +12,11 @@ import Database from './server/models/database'
 import APIRouter from './server/routes/apirouter'
 
 import React from 'react'
-import { match, RouterContext } from 'react-router'
+import { match, RouterContext, createRoutes } from 'react-router'
 import { renderToString } from 'react-dom/server'
-import routes from './app/routes'
+import DataProvider from './app/dataprovider'
+import AppRouter from './app/router'
+const routes = createRoutes(AppRouter());
 
 Database.connect();
 //run this only first time app is run. comment everything else after this out
@@ -71,10 +73,28 @@ app.get('*', function (req, res) {
       		res.redirect(302, redirect.pathname + redirect.search)
     	} 
     	else if (props) {
-			const html = renderToString(<RouterContext {...props}/>)
+    		let authenticated, user;
+			if(req.user) {
+				authenticated = true;
+				user = req.user;
+			}
+			else {
+				authenticated = false;
+				user = null;
+			}
+
+			const data = {
+				authenticated,
+				user
+			};
+
+			const html = renderToString(<DataProvider {...props} data={data}/>)			
+			
 			res.render('application', {
 				layout: false,
-				content: html
+				content: html,
+				authenticated,
+				user
 			});
 		}
 		else {

@@ -9,6 +9,13 @@ class RegisterUser extends React.Component {
 		this.state = {errors: null};
 	}
 
+	componentWillMount() {
+		if(this.props.authenticated) {
+			this.props.router.push('/dashboard');
+		}
+	}
+
+
 	handleSubmit() {
 		const data = {
 			username: this.refs.username.value,

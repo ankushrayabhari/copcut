@@ -9,6 +9,12 @@ class Login extends React.Component {
 		this.state = {error: null};
 	}
 
+	componentWillMount() {
+		if(this.props.authenticated) {
+			this.props.router.push('/dashboard');
+		}
+	}
+
 	handleSubmit() {
 		const data = {
 			username: this.refs.username.value,
@@ -27,7 +33,7 @@ class Login extends React.Component {
 		.then(data => {
 			if(data.success) {
 				this.props.setAuthenticationState(true, data.user);
-				this.props.router.push('/');
+				this.props.router.push('/dashboard');
 			}
 			else {
 				this.setState({error: data.error});
